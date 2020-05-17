@@ -1,4 +1,4 @@
-# projet7-Openclassrooms
+# projet10-Openclassrooms
 
 Pour deployer l'application forkez puis telechargez ce repository
 
