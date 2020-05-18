@@ -34,6 +34,7 @@ public class BookController {
 
     @PostMapping("/saveBook")
     public ResponseEntity<BookDto> save(@RequestBody Book book) {
+        book.setMax_copies(book.getCopies());
         logger.info("New Book added : " + book.getName());
         BookDto newBook = new BookDto(bookService.save(book));
         return new ResponseEntity<>(newBook, HttpStatus.CREATED);

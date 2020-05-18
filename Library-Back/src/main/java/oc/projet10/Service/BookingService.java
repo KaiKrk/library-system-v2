@@ -1,9 +1,6 @@
 package oc.projet10.Service;
 
-import oc.projet10.Entity.Book;
-import oc.projet10.Entity.Booking;
-import oc.projet10.Entity.BookingStatus;
-import oc.projet10.Entity.Member;
+import oc.projet10.Entity.*;
 import oc.projet10.Repository.BookingRepository;
 import oc.projet10.bean.BookingDto;
 import oc.projet10.bean.MailDetails;
@@ -44,6 +41,9 @@ public class BookingService {
 
     @Autowired
     BookingRepository bookingRepository;
+
+    @Autowired
+    WaitingLineService waitingLineService;
 
     public List<BookingDto> findAll(){
         List<BookingDto> bookingDtoList = bookingListToDto(bookingRepository.findAll());
@@ -160,6 +160,32 @@ public class BookingService {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public List<Book> getMemberReservatedBooks(String email){
+        Member member = memberService.getMember(email);
+        List<Booking> bookingList = bookingRepository.findAllByMember(member);
+        List<Book> reservatedBook = new ArrayList<>();
+        for (Booking booking :  bookingList
+             ) {
+            reservatedBook.add(booking.getBook());
+        }
+        return reservatedBook;
+    }
+
+    public void endBooking(int id){
+    Booking booking = bookingRepository.findBookingById(id);
+    Book returnedBook = booking.getBook();
+    List<WaitingLine> waitingListsForThisBook = waitingLineService.getWaitingListbyBook(returnedBook);
+    if (waitingListsForThisBook == null && returnedBook.getCopies() > 0){
+        booking.setStatus(BookingStatus.Terminee.toString());
+        returnedBook.setCopies(returnedBook.getCopies()+1);
+        bookService.save(returnedBook);
+        update(booking);
+    } else {
+
+    }
+    
     }
 
 }

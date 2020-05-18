@@ -1,6 +1,7 @@
 package oc.projet10.Entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -23,6 +24,7 @@ public class Book {
     @Column(name = "copies_book")
     private int copies;
 
+    private int max_copies;
 
     public int getId() {
         return id;
@@ -64,6 +66,13 @@ public class Book {
         this.copies = copies;
     }
 
+    public int getMax_copies() {
+        return max_copies;
+    }
+
+    public void setMax_copies(int max_copies) {
+        this.max_copies = max_copies;
+    }
     @Override
     public String toString() {
         return "Book{" +

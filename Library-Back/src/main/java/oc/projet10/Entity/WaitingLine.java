@@ -1,10 +1,11 @@
 package oc.projet10.Entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "waiting_list")
-public class WaitingList {
+public class WaitingLine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +20,7 @@ public class WaitingList {
     @JoinColumn(name = "member_id", referencedColumnName = "member_id")
     public Member member;
 
-    @Column(name = "waiting_position")
-    public int waitingPosition;
+    @Column(name = "registerDate")
+    public Date registeredDate;
 
 }
