@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface WaitingLineRepository extends JpaRepository<WaitingLine, Integer> {
 
-     List<WaitingLine> findAllByBookOrderByRegisteredDateAsc(Book book);
+     List<WaitingLine> findAllByBookAndStatusOrderByRegisteredDateAsc(Book book, String status);
 
 
 }

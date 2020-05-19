@@ -12,6 +12,7 @@ import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,12 @@ public class BookingService {
 
     @Autowired
     WaitingLineService waitingLineService;
+
+    @Autowired
+    PickupListService pickupListService;
+
+    @Autowired
+    EmailService emailService;
 
     public List<BookingDto> findAll(){
         List<BookingDto> bookingDtoList = bookingListToDto(bookingRepository.findAll());
@@ -173,7 +180,7 @@ public class BookingService {
         return reservatedBook;
     }
 
-    public void endBooking(int id){
+    public void endBooking(int id) throws Exception {
     Booking booking = bookingRepository.findBookingById(id);
     Book returnedBook = booking.getBook();
     List<WaitingLine> waitingListsForThisBook = waitingLineService.getWaitingListbyBook(returnedBook);
@@ -183,7 +190,11 @@ public class BookingService {
         bookService.save(returnedBook);
         update(booking);
     } else {
-
+        WaitingLine waitingLinefirst = waitingLineService.getTheFirstOfWaitingList(returnedBook);
+        String email = waitingLinefirst.getMember().getEmail();
+        emailService.sendEmailForPickup(email, waitingLinefirst.getBook());
+        waitingLineService.updateStatus(waitingLinefirst);
+        pickupListService.waitingLineToPickupLine(waitingLinefirst);
     }
     
     }

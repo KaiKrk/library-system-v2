@@ -1,5 +1,6 @@
 package oc.projet10.Controller;
 import oc.projet10.Entity.Book;
+import oc.projet10.Entity.Member;
 import oc.projet10.Service.BookService;
 import oc.projet10.bean.BookDto;
 import org.slf4j.Logger;
@@ -23,8 +24,9 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping("/books")
-    public ResponseEntity<List<BookDto>> books(){
-        List<BookDto> booksList = bookService.findAll();
+    public ResponseEntity<List<BookDto>> books(@RequestBody Member member){
+
+        List<BookDto> booksList = bookService.findAllExceptReservated(member.getEmail());
         if (booksList.isEmpty()){
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         }
