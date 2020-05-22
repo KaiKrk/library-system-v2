@@ -3,9 +3,11 @@ package oc.projet10.Controller;
 import oc.projet10.Entity.Book;
 import oc.projet10.Entity.Booking;
 import oc.projet10.Entity.Member;
+import oc.projet10.Entity.PickupList;
 import oc.projet10.Service.BookService;
 import oc.projet10.Service.BookingService;
 import oc.projet10.Service.MemberService;
+import oc.projet10.Service.PickupListService;
 import oc.projet10.bean.BookingDto;
 import oc.projet10.bean.BookingRequest;
 import org.slf4j.Logger;
@@ -33,6 +35,9 @@ public class BookingController {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    PickupListService pickupListService;
 
     @PostMapping("/saveBooking")
     public ResponseEntity<BookingDto> save(@RequestBody BookingRequest bookingRequest) {
@@ -84,4 +89,13 @@ public class BookingController {
         bookingService.checkDate(bookingList);
     }
 
+    @PostMapping("/endBooking")
+    public void endBooking(@RequestBody BookingRequest bookingRequest) throws Exception {
+        bookingService.endBooking(bookingRequest.getId());
+    }
+
+    @GetMapping("/activePickup")
+    public List<PickupList> activePickup(){
+        return pickupListService.activePickUps();
+    }
 }

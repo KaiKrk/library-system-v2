@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class PickupListService {
@@ -29,5 +30,9 @@ public class PickupListService {
         pickupList.setMember(waitingLine.getMember());
         pickupList.setStatus(WaitingPickingStatus.Actif.toString());
         save(pickupList);
+    }
+
+    public List<PickupList> activePickUps(){
+       return  pickupListRepository.findAllByStatus(WaitingPickingStatus.Actif.toString());
     }
 }

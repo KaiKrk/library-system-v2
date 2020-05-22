@@ -51,7 +51,7 @@ public class BookingService {
         }
     }
 
-    public void checkDate(List<Booking> bookings) throws MessagingException {
+    public void checkDateBooking(List<Booking> bookings) throws MessagingException {
         LocalDate today =  LocalDate.now();
         for (Booking booking: bookings) {
             if (booking.getReturnDate().compareTo(today) > 0){
