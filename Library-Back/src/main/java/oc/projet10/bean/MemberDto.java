@@ -4,7 +4,7 @@ import oc.projet10.Entity.Member;
 
 public class MemberDto {
 
-    private int id;
+    private int memberId;
     private String name;
 
     private String surname;
@@ -16,7 +16,7 @@ public class MemberDto {
     private boolean isAdmin;
 
     public MemberDto(Member member) {
-        this.id = member.getId();
+        this.memberId = member.getId();
         this.name = member.getName();
         this.surname = member.getSurname();
         this.email = member.getEmail();
@@ -35,12 +35,12 @@ public class MemberDto {
     public MemberDto() {
     }
 
-    public int getId() {
-        return id;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public String getName() {
@@ -78,7 +78,7 @@ public class MemberDto {
     @Override
     public String toString() {
         return "MemberDto{" +
-                "id=" + id +
+                "id=" + memberId +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +

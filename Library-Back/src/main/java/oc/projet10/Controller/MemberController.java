@@ -40,7 +40,6 @@ public class MemberController {
     @GetMapping("/members")
     public ResponseEntity<List<MemberDto> >listContact() {
         List<MemberDto> members = memberService.findAll();
-        System.out.println(members);
         return new ResponseEntity<>(members,HttpStatus.OK);
     }
 }

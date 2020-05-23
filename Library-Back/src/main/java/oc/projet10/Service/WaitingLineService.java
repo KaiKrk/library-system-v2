@@ -28,4 +28,12 @@ public class WaitingLineService {
         waitingLine.setStatus(WaitingPickingStatus.Terminee.toString());
         waitingLineRepository.save(waitingLine);
     }
+
+    public void addInWaitingLine(WaitingLine waitingLine){
+        waitingLineRepository.save(waitingLine);
+    }
+
+    public WaitingLine save(WaitingLine waitingLine){
+        return  waitingLineRepository.save(waitingLine);
+    }
 }

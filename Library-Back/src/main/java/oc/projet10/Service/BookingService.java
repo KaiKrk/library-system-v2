@@ -141,7 +141,6 @@ public class BookingService {
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
-        System.out.println(" email : " + mailDetails.getMyAccountEmail() + "  " + mailDetails.getPassword());
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override

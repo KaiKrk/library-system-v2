@@ -1,6 +1,7 @@
 package oc.projet10.Entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
@@ -21,7 +22,7 @@ public class PickupList {
     public Book book;
 
     @Column(name = "expiration_date")
-    private LocalDate expirationDate;
+    private Timestamp expirationDate;
 
     @Column(name = "status")
     private String status;
@@ -50,11 +51,11 @@ public class PickupList {
         this.book = book;
     }
 
-    public LocalDate getExpirationDate() {
+    public Timestamp getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(LocalDate expirationDate) {
+    public void setExpirationDate(Timestamp expirationDate) {
         this.expirationDate = expirationDate;
     }
 

@@ -1,31 +1,30 @@
-package oc.projet10.Entity;
+package oc.projet10.bean;
 
-import javax.persistence.*;
+import oc.projet10.Entity.Book;
+import oc.projet10.Entity.Member;
+import oc.projet10.Entity.WaitingLine;
+
 import java.sql.Timestamp;
-import java.util.Date;
 
-@Entity
-@Table(name = "waiting_list")
-public class WaitingLine {
+public class WaitingLineDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    public int id;
+    private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", referencedColumnName = "book_id")
-    public Book book;
+    private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", referencedColumnName = "member_id")
-    public Member member;
+    private Member member;
 
-    @Column(name = "registerDate")
-    public Timestamp registeredDate;
+    private Timestamp registeredDate;
 
-    @Column(name = "status")
-    public String status;
+    private String status;
+
+    public WaitingLineDto(WaitingLine waitingLine) {
+        this.id = waitingLine.getId();
+        this.book = waitingLine.getBook();
+        this.member = waitingLine.getMember();
+        this.registeredDate = waitingLine.getRegisteredDate();
+        this.status = waitingLine.getStatus();
+    }
 
     public int getId() {
         return id;
@@ -66,4 +65,6 @@ public class WaitingLine {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
 }

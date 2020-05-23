@@ -29,14 +29,18 @@ public class BookService {
 
     public List<BookDto> findAllExceptReservated(String email){
         List<Book> bookList = bookRepository.findAll();
+        System.out.println("livres =" + bookList);
         List <Book> reservatedBook = bookingService.getMemberReservatedBooks(email);
+        System.out.println("reservatedBook = "+reservatedBook);
         for (Book book : reservatedBook
              ) {
             if (bookList.contains(book)){
                 bookList.remove(book);
             }
         }
+        System.out.println("la liste apres traitement ="+bookList);
         List<BookDto> bookDtoList = bookListToDto(bookList);
+        System.out.println("le dto " + bookDtoList);
         return bookDtoList;
     }
 

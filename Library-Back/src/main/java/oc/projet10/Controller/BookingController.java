@@ -80,14 +80,14 @@ public class BookingController {
             return new ResponseEntity<>(bookingDto, HttpStatus.OK);
         }
 
-    @Scheduled(cron = "0 5 * * * *")
-    public void checkReturnDate() throws MessagingException {
-        System.out.println("Check cron");
-        List<Booking> bookingList = bookingService.findAllByStatus();
-        System.out.println(bookingList.toString());
-
-        bookingService.checkDate(bookingList);
-    }
+//    @Scheduled(cron = "0 5 * * * *")
+//    public void checkReturnDate() throws MessagingException {
+//        System.out.println("Check cron");
+//        List<Booking> bookingList = bookingService.findAllByStatus();
+//        System.out.println(bookingList.toString());
+//
+//        bookingService.checkDate(bookingList);
+//    }
 
     @PostMapping("/endBooking")
     public void endBooking(@RequestBody BookingRequest bookingRequest) throws Exception {
