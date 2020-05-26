@@ -5,6 +5,7 @@ import oc.projet10.Entity.Member;
 import oc.projet10.Entity.WaitingLine;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class WaitingLineDto {
 
@@ -14,7 +15,7 @@ public class WaitingLineDto {
 
     private Member member;
 
-    private Timestamp registeredDate;
+    private LocalDateTime registeredDate;
 
     private String status;
 
@@ -50,11 +51,11 @@ public class WaitingLineDto {
         this.member = member;
     }
 
-    public Timestamp getRegisteredDate() {
+    public LocalDateTime getRegisteredDate() {
         return registeredDate;
     }
 
-    public void setRegisteredDate(Timestamp registeredDate) {
+    public void setRegisteredDate(LocalDateTime registeredDate) {
         this.registeredDate = registeredDate;
     }
 

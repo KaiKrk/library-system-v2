@@ -22,7 +22,7 @@ public class PickupList {
     public Book book;
 
     @Column(name = "expiration_date")
-    private Timestamp expirationDate;
+    private LocalDate expirationDate;
 
     @Column(name = "status")
     private String status;
@@ -51,11 +51,11 @@ public class PickupList {
         this.book = book;
     }
 
-    public Timestamp getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Timestamp expirationDate) {
+    public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
 

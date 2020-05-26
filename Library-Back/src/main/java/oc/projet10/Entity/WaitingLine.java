@@ -2,6 +2,7 @@ package oc.projet10.Entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -21,8 +22,8 @@ public class WaitingLine {
     @JoinColumn(name = "member_id", referencedColumnName = "member_id")
     public Member member;
 
-    @Column(name = "registerDate")
-    public Timestamp registeredDate;
+    @Column(name = "register_date")
+    public LocalDateTime registeredDate;
 
     @Column(name = "status")
     public String status;
@@ -51,11 +52,11 @@ public class WaitingLine {
         this.member = member;
     }
 
-    public Timestamp getRegisteredDate() {
+    public LocalDateTime getRegisteredDate() {
         return registeredDate;
     }
 
-    public void setRegisteredDate(Timestamp registeredDate) {
+    public void setRegisteredDate(LocalDateTime registeredDate) {
         this.registeredDate = registeredDate;
     }
 

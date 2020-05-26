@@ -16,6 +16,7 @@ public class WaitingLineService {
     WaitingLineRepository waitingLineRepository;
 
     public List<WaitingLine> getWaitingListbyBook(Book book){
+        System.out.println(waitingLineRepository.findAllByBookAndStatusOrderByRegisteredDateAsc(book ,WaitingPickingStatus.Actif.toString()));
         return waitingLineRepository.findAllByBookAndStatusOrderByRegisteredDateAsc(book ,WaitingPickingStatus.Actif.toString());
     }
 

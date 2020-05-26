@@ -5,6 +5,7 @@ import oc.projet10.Entity.Member;
 import oc.projet10.Entity.PickupList;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class PickupDto {
@@ -13,7 +14,7 @@ public class PickupDto {
 
     private Book book;
 
-    private Date expirationDate;
+    private LocalDate expirationDate;
 
     private Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
