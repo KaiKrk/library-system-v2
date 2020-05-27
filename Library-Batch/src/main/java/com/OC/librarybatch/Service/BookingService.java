@@ -1,10 +1,14 @@
 package com.OC.librarybatch.Service;
 
 import com.OC.librarybatch.Entity.Booking;
+import com.OC.librarybatch.Entity.BookingRequest;
 import com.OC.librarybatch.Entity.MailDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.mail.*;
 import javax.mail.internet.AddressException;
@@ -22,6 +26,8 @@ import java.util.Properties;
 
 @Service
 public class BookingService {
+
+    RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
     private MailDetails mailDetails;
@@ -56,8 +62,16 @@ public class BookingService {
         for (Booking booking: bookings) {
             if (booking.getReturnDate().compareTo(today) > 0){
                 sendMail(booking.getMemberEmail(), booking.getBookName());
+                BookingRequest bookingRequest = new BookingRequest(booking.getId());
+                endBooking(bookingRequest);
+
             }
         }
+    }
+    public HttpStatus endBooking(BookingRequest bookingRequest){
+        ResponseEntity<BookingRequest> responseEntity =
+                restTemplate.postForEntity("http://localhost:8080/endBooking",bookingRequest, BookingRequest.class);
+        return responseEntity.getStatusCode();
     }
 
 

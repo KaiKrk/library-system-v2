@@ -1,6 +1,8 @@
 package com.OC.librarybatch.Service;
 
+import com.OC.librarybatch.Entity.BookingRequest;
 import com.OC.librarybatch.Entity.Pickup;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,5 +32,11 @@ public class PickupService {
             }
         }
         restTemplate.postForEntity("http://localhost:8080/expiredPickups",expiredPickups, ResponseEntity.class);
+    }
+
+    public HttpStatus endBooking(BookingRequest bookingRequest){
+        ResponseEntity<BookingRequest> responseEntity =
+                restTemplate.postForEntity("http://localhost:8080/activePickups",bookingRequest, BookingRequest.class);
+        return responseEntity.getStatusCode();
     }
 }

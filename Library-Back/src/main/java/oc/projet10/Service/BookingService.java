@@ -185,6 +185,7 @@ public class BookingService {
     List<WaitingLine> waitingListsForThisBook = waitingLineService.getWaitingListbyBook(returnedBook);
     if (waitingListsForThisBook == null && returnedBook.getCopies() > 0){
         booking.setStatus(BookingStatus.Terminee.toString());
+        booking.setRenewable(false);
         returnedBook.setCopies(returnedBook.getCopies()+1);
         bookService.save(returnedBook);
         update(booking);
