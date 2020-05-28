@@ -39,8 +39,6 @@ public class PickupList {
         return member;
     }
 
-
-    
     public void setMember(Member member) {
         this.member = member;
     }

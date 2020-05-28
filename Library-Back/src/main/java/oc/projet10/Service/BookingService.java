@@ -21,16 +21,6 @@ import java.util.Properties;
 @Service
 public class BookingService {
 
-    @Value("${bookingStatus}")
-    private static String bookingStatus;
-
-    @Value("${account}")
-    private static String myAccountEmail;
-
-    @Value("${password}")
-    private static String password;
-
-
     @Autowired
     private MailDetails mailDetails;
 
