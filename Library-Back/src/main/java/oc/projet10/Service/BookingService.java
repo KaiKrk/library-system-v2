@@ -61,6 +61,8 @@ public class BookingService {
         return bookingRepository.findBookingById(id);
     }
 
+    public List<Booking> findBookingByBook(int bookId) { return bookingRepository.findAllByBook(bookService.findBookById(bookId)); }
+
     public List<Booking> findAllByStatus(){
           List<Booking> activeBookings =  bookingRepository.findAllByStatus("Actif");
           return activeBookings;
