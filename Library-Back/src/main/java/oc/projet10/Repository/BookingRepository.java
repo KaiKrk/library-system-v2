@@ -1,5 +1,6 @@
 package oc.projet10.Repository;
 
+import oc.projet10.Entity.Book;
 import oc.projet10.Entity.Booking;
 import oc.projet10.Entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     List<Booking> findAllByStatus(String status);
 
     Booking findBookingById(int id);
+
+    List<Booking> findAllByBookOrderByReturnDate(Book book);
 
 }

@@ -21,10 +21,10 @@ public class Booking {
     private Book book;
 
     @Column(name = "borrowing_date")
-    private LocalDate borrowing_date;
+    private LocalDate borrowingDate;
 
     @Column(name = "return_date")
-    private LocalDate return_date;
+    private LocalDate returnDate;
 
     @Column(name = "renewable")
     private Boolean renewable;
@@ -65,20 +65,20 @@ public class Booking {
         this.book = book;
     }
 
-    public LocalDate getBorrowing_date() {
-        return borrowing_date;
+    public LocalDate getBorrowingDate() {
+        return borrowingDate;
     }
 
-    public void setBorrowing_date(LocalDate borrowing_date) {
-        this.borrowing_date = borrowing_date;
+    public void setBorrowingDate(LocalDate borrowing_date) {
+        this.borrowingDate = borrowing_date;
     }
 
-    public LocalDate getReturn_date() {
-        return return_date;
+    public LocalDate getReturnDate() {
+        return returnDate;
     }
 
-    public void setReturn_date(LocalDate return_date) {
-        this.return_date = return_date;
+    public void setReturnDate(LocalDate return_date) {
+        this.returnDate = return_date;
     }
 
     public Boolean getRenewable() {
@@ -92,11 +92,11 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(Member membre, Book book, LocalDate borrowing_date, LocalDate return_date, Boolean renewable) {
+    public Booking(Member membre, Book book, LocalDate borrowingDate, LocalDate returnDate, Boolean renewable) {
         this.member = membre;
         this.book = book;
-        this.borrowing_date = borrowing_date;
-        this.return_date = return_date;
+        this.borrowingDate = borrowingDate;
+        this.returnDate = returnDate;
         this.renewable = renewable;
     }
 }

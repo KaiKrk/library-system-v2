@@ -5,14 +5,12 @@ import oc.projet10.Repository.BookingRepository;
 import oc.projet10.bean.BookingDto;
 import oc.projet10.bean.MailDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +58,8 @@ public class BookingService {
         Booking booking = new Booking();
         LocalDate today =  LocalDate.now();
         LocalDate futureDate = LocalDate.now().plusMonths(1);
-        booking.setBorrowing_date(today);
-        booking.setReturn_date(futureDate);
+        booking.setBorrowingDate(today);
+        booking.setReturnDate(futureDate);
         booking.setRenewable(true);
         booking.setMembre(member);
         booking.setBook(book);
@@ -79,6 +77,10 @@ public class BookingService {
     Member member = memberService.getMember(email);
     List<BookingDto> MyBookings = bookingListToDto( bookingRepository.findAllByMember(member));
     return MyBookings;
+    }
+
+    public List<Booking> findAllByBookOrderByDate(Book book){
+        return bookingRepository.findAllByBookOrderByReturnDate(book);
     }
 
 
@@ -106,7 +108,7 @@ public class BookingService {
     public void checkDate(List<Booking> bookings) throws MessagingException {
         LocalDate today =  LocalDate.now();
         for (Booking booking: bookings) {
-            if (booking.getReturn_date().compareTo(today) > 0){
+            if (booking.getReturnDate().compareTo(today) > 0){
                 booking.setStatus(BookingStatus.Retard.toString());
                 sendMail(booking.getMembre().getEmail(), booking.getBook().getName());
             }
@@ -114,7 +116,7 @@ public class BookingService {
     }
     
     public Booking extend(Booking booking){
-        booking.setReturn_date(LocalDate.now().plusMonths(1));
+        booking.setReturnDate(LocalDate.now().plusMonths(1));
         booking.setStatus(BookingStatus.Prolongee.toString());
         booking.setRenewable(false);
         System.out.println(booking +" extend");

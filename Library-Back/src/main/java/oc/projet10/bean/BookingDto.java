@@ -26,8 +26,8 @@ public class BookingDto {
         this.id = booking.getId();
         this.member = booking.getMembre();
         this.book = booking.getBook();
-        this.borrowingDate = booking.getBorrowing_date();
-        this.returnDate = booking.getReturn_date();
+        this.borrowingDate = booking.getBorrowingDate();
+        this.returnDate = booking.getReturnDate();
         this.renewable = booking.getRenewable();
         this.status = booking.getStatus();
     }
