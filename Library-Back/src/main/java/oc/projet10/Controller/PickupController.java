@@ -5,6 +5,8 @@ import oc.projet10.Entity.WaitingPickingStatus;
 import oc.projet10.Repository.PickupListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,5 +25,10 @@ public class PickupController {
             pickupListRepository.save(pickupList);
         }
 
+    }
+
+    @GetMapping("activePickups")
+    public List<PickupList> getActivePickups(){
+       return pickupListRepository.findAllByStatus(WaitingPickingStatus.Actif.toString());
     }
 }
