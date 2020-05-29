@@ -63,14 +63,14 @@ public class BookingService {
             if (booking.getReturnDate().compareTo(today) > 0){
                 sendMail(booking.getMemberEmail(), booking.getBookName());
                 BookingRequest bookingRequest = new BookingRequest(booking.getId());
-                endBooking(bookingRequest);
+                expiredBooking(bookingRequest);
 
             }
         }
     }
-    public HttpStatus endBooking(BookingRequest bookingRequest){
+    public HttpStatus expiredBooking(BookingRequest bookingRequest){
         ResponseEntity<BookingRequest> responseEntity =
-                restTemplate.postForEntity("http://localhost:8080/endBooking",bookingRequest, BookingRequest.class);
+                restTemplate.postForEntity("http://localhost:8080/expiredBooking",bookingRequest, BookingRequest.class);
         return responseEntity.getStatusCode();
     }
 

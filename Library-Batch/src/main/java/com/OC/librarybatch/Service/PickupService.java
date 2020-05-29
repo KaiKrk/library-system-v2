@@ -34,9 +34,4 @@ public class PickupService {
         restTemplate.postForEntity("http://localhost:8080/expiredPickups",expiredPickups, ResponseEntity.class);
     }
 
-    public HttpStatus endBooking(BookingRequest bookingRequest){
-        ResponseEntity<BookingRequest> responseEntity =
-                restTemplate.postForEntity("http://localhost:8080/activePickups",bookingRequest, BookingRequest.class);
-        return responseEntity.getStatusCode();
-    }
 }

@@ -73,16 +73,16 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
+    public List<Booking> findAllByBookOrderByDate(Book book){
+        return bookingRepository.findAllByBookOrderByReturnDate(book);
+    }
+
+
     public List<BookingDto> findMyBooking(String email){
     Member member = memberService.getMember(email);
     List<BookingDto> MyBookings = bookingListToDto( bookingRepository.findAllByMember(member));
     return MyBookings;
     }
-
-    public List<Booking> findAllByBookOrderByDate(Book book){
-        return bookingRepository.findAllByBookOrderByReturnDate(book);
-    }
-
 
     public List<BookingDto> bookingListToDto(List<Booking> bookingList){
         List<BookingDto> bookingDtoList = new ArrayList<>();
@@ -101,7 +101,8 @@ public class BookingService {
         } else if (status.equalsIgnoreCase(BookingStatus.Terminee.toString())){
             booking.setStatus(status);
         }
-        return booking;
+
+        return bookingRepository.save(booking);
     }
 
     

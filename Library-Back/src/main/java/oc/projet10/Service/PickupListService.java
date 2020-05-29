@@ -1,14 +1,15 @@
 package oc.projet10.Service;
 
-import oc.projet10.Entity.PickupList;
-import oc.projet10.Entity.WaitingLine;
-import oc.projet10.Entity.WaitingPickingStatus;
+import oc.projet10.Entity.*;
 import oc.projet10.Repository.PickupListRepository;
+import oc.projet10.bean.BookingDto;
+import oc.projet10.bean.PickupDto;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,7 +33,17 @@ public class PickupListService {
         save(pickupList);
     }
 
-    public List<PickupList> activePickUps(){
-       return  pickupListRepository.findAllByStatus(WaitingPickingStatus.Actif.toString());
+
+    public List<PickupDto> getActivePickups(){
+        List<PickupDto> activePickups = pickupListToDto(pickupListRepository.findAllByStatus(WaitingPickingStatus.Actif.toString()));
+        return activePickups;
+    }
+
+    public List<PickupDto> pickupListToDto(List<PickupList> pickupLists){
+        List<PickupDto> pickupDtoList = new ArrayList<>();
+        for (PickupList pickupList : pickupLists) {
+            pickupDtoList.add(new PickupDto(pickupList));
+        }
+        return pickupDtoList;
     }
 }

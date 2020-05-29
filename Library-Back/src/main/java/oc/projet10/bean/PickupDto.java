@@ -4,11 +4,10 @@ import oc.projet10.Entity.Book;
 import oc.projet10.Entity.Member;
 import oc.projet10.Entity.PickupList;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
-
 public class PickupDto {
+
+    private int id;
 
     private Member member;
 
@@ -16,11 +15,43 @@ public class PickupDto {
 
     private LocalDate expirationDate;
 
-    private Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
     public PickupDto(PickupList pickupList) {
+        this.id = pickupList.getId();
         this.member = pickupList.getMember();
         this.book = pickupList.getBook();
         this.expirationDate = pickupList.getExpirationDate();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
     }
 }

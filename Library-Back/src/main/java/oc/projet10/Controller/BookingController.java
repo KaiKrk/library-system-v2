@@ -1,9 +1,6 @@
 package oc.projet10.Controller;
 
-import oc.projet10.Entity.Book;
-import oc.projet10.Entity.Booking;
-import oc.projet10.Entity.Member;
-import oc.projet10.Entity.PickupList;
+import oc.projet10.Entity.*;
 import oc.projet10.Service.BookService;
 import oc.projet10.Service.BookingService;
 import oc.projet10.Service.MemberService;
@@ -74,6 +71,7 @@ public class BookingController {
 
     @PostMapping("/extendBooking")
     public ResponseEntity<BookingDto> extendDate(@RequestBody BookingRequest bookingRequest){
+        System.out.println(" id " + bookingRequest.getId());
         Booking booking = bookingService.findBookingById(bookingRequest.getId());
         BookingDto bookingDto = new BookingDto(bookingService.extend(booking));
         logger.info("booking number " + booking.getId() + "is extended " );
@@ -94,8 +92,8 @@ public class BookingController {
         bookingService.endBooking(bookingRequest.getId());
     }
 
-    @GetMapping("/activePickup")
-    public List<PickupList> activePickup(){
-        return pickupListService.activePickUps();
+    @PostMapping("/expiredBooking")
+    public void expiredBooking(@RequestBody BookingRequest bookingRequest) throws Exception {
+        bookingService.changeStatus(bookingService.findBookingById(bookingRequest.getId()), BookingStatus.Retard.toString());
     }
 }
