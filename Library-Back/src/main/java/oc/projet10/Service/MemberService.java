@@ -48,4 +48,8 @@ public class MemberService {
         }
         return memberDtoList;
     }
+
+    public void delete(Member member){
+        memberRepository.delete(member);
+    }
 }
