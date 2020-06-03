@@ -98,11 +98,17 @@ public class BookingService {
 
     public Booking changeStatus(Booking booking,String status){
 
-        if (status.equalsIgnoreCase(BookingStatus.Actif.toString())){
+//        if (status.equalsIgnoreCase(BookingStatus.Actif.toString())){
+//            booking.setStatus(status);
+//        } else if (status.equalsIgnoreCase(BookingStatus.Prolongee.toString())){
+//            booking.setStatus(status);
+//        } else if (status.equalsIgnoreCase(BookingStatus.Terminee.toString())){
+//            booking.setStatus(status);
+//        }
+        if (status.equalsIgnoreCase(BookingStatus.Retard.toString())){
             booking.setStatus(status);
-        } else if (status.equalsIgnoreCase(BookingStatus.Prolongee.toString())){
-            booking.setStatus(status);
-        } else if (status.equalsIgnoreCase(BookingStatus.Terminee.toString())){
+            booking.setRenewable(false);
+        } else{
             booking.setStatus(status);
         }
 
@@ -121,10 +127,13 @@ public class BookingService {
     }
     
     public Booking extend(Booking booking){
-        booking.setReturnDate(LocalDate.now().plusMonths(1));
-        booking.setStatus(BookingStatus.Prolongee.toString());
-        booking.setRenewable(false);
-        System.out.println(booking +" extend");
+        // #2 cannot extend booking if renewable is false
+        if(booking.getRenewable() == true){
+            booking.setReturnDate(LocalDate.now().plusMonths(1));
+            booking.setStatus(BookingStatus.Prolongee.toString());
+            booking.setRenewable(false);
+            System.out.println(booking +" extend");
+        }
         return update(booking);
     }
 
