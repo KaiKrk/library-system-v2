@@ -5,8 +5,12 @@ import oc.projet10.Entity.Book;
 import oc.projet10.Entity.Booking;
 import oc.projet10.Service.BookingService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -29,13 +33,6 @@ class Projet10ApplicationTests {
     void contextLoads() {
     }
 
-   @Test
-    void sendEmail() throws Exception{
-       List<Booking> bookingList = bookingService.findAllByStatus();
-       System.out.println(bookingList.toString());
-
-       bookingService.checkDate(bookingList);
-   }
 
 
 

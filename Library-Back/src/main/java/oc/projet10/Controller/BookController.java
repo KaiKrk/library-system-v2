@@ -24,7 +24,7 @@ public class BookController {
     @PostMapping("/books")
     public ResponseEntity<List<BookDto>> books(@RequestBody MemberDto member){
 
-        List<BookDto> booksList = bookService.findAllExceptReservated(member.getEmail());
+        List<BookDto> booksList = bookService.findBooksNotReservated(member.getMemberId());
         if (booksList.isEmpty()){
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         }

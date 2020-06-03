@@ -12,10 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import java.util.List;
 
 
@@ -42,7 +40,7 @@ public class BookingController {
         Book book = bookService.findBookById(bookingRequest.getBookId());
 
         logger.info("New Booking created by " + member.getName() + " for the book " + book.getName());
-       BookingDto newBooking =  new BookingDto(bookingService.save(member, book));
+       BookingDto newBooking =  new BookingDto(bookingService.createBooking(member, book));
         return new ResponseEntity<>(newBooking, HttpStatus.CREATED);
     }
 

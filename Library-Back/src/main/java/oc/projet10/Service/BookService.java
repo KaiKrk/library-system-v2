@@ -26,22 +26,34 @@ public class BookService {
         List<BookDto> bookDtoList = bookListToDto( bookRepository.findAll());
         return bookDtoList;
     }
+//
+//    public List<BookDto> findAllExceptReservated(String email){
+//        List<Book> bookList = bookRepository.findAll();
+//        List <Book> reservatedBook = bookingService.getMemberReservatedBooks(email);
+//        for (Book book : reservatedBook
+//             ) {
+//            if (bookList.contains(book)){
+//                System.out.println("-1");
+//                bookList.remove(book);
+//            }
+//        }
+//        System.out.println("email " + email);
+//        System.out.println("Tous les livres " + bookList.size() + "Nombre de livre reserve " + reservatedBook.size());
+//
+//        List<BookDto> bookDtoList = bookListToDto(bookList);
+//        System.out.println("la liste retour " + bookDtoList.size());
+//        return bookDtoList;
+//    }
 
-    public List<BookDto> findAllExceptReservated(String email){
-        List<Book> bookList = bookRepository.findAll();
-        System.out.println("livres =" + bookList);
-        List <Book> reservatedBook = bookingService.getMemberReservatedBooks(email);
-        System.out.println("reservatedBook = "+reservatedBook);
-        for (Book book : reservatedBook
-             ) {
-            if (bookList.contains(book)){
-                bookList.remove(book);
-            }
-        }
-        System.out.println("la liste apres traitement ="+bookList);
-        List<BookDto> bookDtoList = bookListToDto(bookList);
-        System.out.println("le dto " + bookDtoList);
+    public List<BookDto> findBooksNotReservated(int memberId){
+
+        List<BookDto> bookDtoList = bookListToDto(bookRepository.findBookExceptReservatedOnes(memberId));
         return bookDtoList;
+    }
+
+    public List<BookDto> findReservatedBooks(int memberId){
+        List<BookDto> reservatedBookList = bookListToDto(bookRepository.findReservatedBook(memberId));
+        return  reservatedBookList;
     }
 
     public Book save(Book book) {
@@ -59,4 +71,6 @@ public class BookService {
     public Book findBookById( int id){
         return bookRepository.findBookById(id);
     }
+
+    public void delete(Book book){bookRepository.delete(book);}
 }

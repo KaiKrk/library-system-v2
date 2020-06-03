@@ -54,7 +54,7 @@ public class BookingService {
           return activeBookings;
     }
 
-    public Booking save(Member member, Book book){
+    public Booking createBooking(Member member, Book book){
         Booking booking = new Booking();
         LocalDate today =  LocalDate.now();
         LocalDate futureDate = LocalDate.now().plusMonths(1);
@@ -66,7 +66,11 @@ public class BookingService {
         booking.setStatus(BookingStatus.Actif.toString());
         book.setCopies(book.getCopies()-1);
         bookService.save(book);
-       return bookingRepository.save(booking);
+       return saveBooking(booking);
+    }
+
+    public Booking saveBooking(Booking booking){
+        return bookingRepository.save(booking);
     }
 
     public Booking update(Booking booking){
@@ -161,16 +165,16 @@ public class BookingService {
         return null;
     }
     
-    public List<Book> getMemberReservatedBooks(String email){
-        Member member = memberService.getMember(email);
-        List<Booking> bookingList = bookingRepository.findAllByMember(member);
-        List<Book> reservatedBook = new ArrayList<>();
-        for (Booking booking :  bookingList
-             ) {
-            reservatedBook.add(booking.getBook());
-        }
-        return reservatedBook;
-    }
+//    public List<Book> getMemberReservatedBooks(String email){
+//        Member member = memberService.getMember(email);
+//        List<Booking> bookingList = bookingRepository.findAllByMember(member);
+//        List<Book> reservatedBook = new ArrayList<>();
+//        for (Booking booking :  bookingList
+//             ) {
+//            reservatedBook.add(booking.getBook());
+//        }
+//        return reservatedBook;
+//    }
 
     public void endBooking(int id) throws Exception {
     Booking booking = bookingRepository.findBookingById(id);
@@ -190,6 +194,10 @@ public class BookingService {
         pickupListService.waitingLineToPickupLine(waitingLinefirst);
     }
     
+    }
+
+    public void deleteBooking(int id){
+        bookingRepository.deleteById(id);
     }
 
 }

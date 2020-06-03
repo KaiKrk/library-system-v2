@@ -19,4 +19,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     List<Booking> findAllByBookOrderByReturnDate(Book book);
 
+    void deleteById(int id);
+
 }
