@@ -39,17 +39,16 @@ public class BookingServiceTest {
     Book testBook = new Book();
 
 
+
     @BeforeAll
      void initEntities(){
         testMember = memberService.getMemberById(3);
-        testBook.setId(-60);
         testBook.setCopies(100);
         testBook.setMax_copies(100);
         testBook.setAuthor("test");
         testBook.setCategory("test");
         testBook.setName("test");
-        bookService.save(testBook);
-        testBooking.setId(-50);
+        this.testBook = bookService.save(testBook);
         testBooking.setMembre(testMember);
         testBooking.setBook(testBook);
         testBooking.setRenewable(true);
@@ -60,8 +59,9 @@ public class BookingServiceTest {
 
     @AfterAll
     void deleteEntities(){
-        bookService.delete(testBook);
+        bookService.delete(this.testBook);
     }
+
 
     @Test
     public void testReturnAllBookings(){
@@ -70,9 +70,10 @@ public class BookingServiceTest {
 
     @Test
     public void testReturnBookingById(){
-        int id = 1;
-        Booking returnedBooking = bookingService.findBookingById(id);
-        assertEquals(id, returnedBooking.getId());
+        Booking savedBooking = bookingService.saveBooking(testBooking);
+        Booking returnedBooking = bookingService.findBookingById(savedBooking.getId());
+        assertEquals(savedBooking.getId(), returnedBooking.getId());
+        bookingService.deleteBooking(savedBooking.getId());
     }
 
     @Test
@@ -86,10 +87,38 @@ public class BookingServiceTest {
 
     @Test
     public void testSavingBooking(){
-        bookingService.saveBooking(testBooking);
-        Booking booking = bookingService.findBookingById(-50);
-        assertEquals(booking,testBooking);
-        bookingService.deleteBooking(-50);
+        Booking savedBooking = bookingService.saveBooking(testBooking);
+        assertEquals(savedBooking.getBook().getId(),testBooking.getBook().getId());
+        assertEquals(savedBooking.getMembre().getId(),testBooking.getMembre().getId());
+        bookingService.deleteBooking(savedBooking.getId());
     }
+
+    @Test
+    public void testUpdateBooking(){
+        Booking savedBooking = bookingService.saveBooking(testBooking);
+        savedBooking.setStatus("thisIsATest");
+        bookingService.update(savedBooking);
+        assertEquals(bookingService.findBookingById(savedBooking.getId()).getStatus(),"thisIsATest");
+        bookingService.deleteBooking(savedBooking.getId());
+    }
+
+    @Test
+    public void testChangeStatus(){
+        Booking savedBooking = bookingService.saveBooking(testBooking);
+        bookingService.changeStatus(savedBooking,"Retard");
+        assertTrue(bookingService.findBookingById(savedBooking.getId()).getRenewable().equals(false));
+        bookingService.deleteBooking(savedBooking.getId());
+    }
+
+
+    @Test
+    public void testEndingBooking() throws Exception {
+        Booking savedBooking = bookingService.saveBooking(testBooking);
+        bookingService.endBooking(savedBooking.getId());
+        assertEquals(bookingService.findBookingById(savedBooking.getId()).getStatus(),"Terminee");
+        bookingService.deleteBooking(savedBooking.getId());
+
+    }
+
 
 }

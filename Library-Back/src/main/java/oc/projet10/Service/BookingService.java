@@ -116,15 +116,15 @@ public class BookingService {
     }
 
     
-    public void checkDate(List<Booking> bookings) throws MessagingException {
-        LocalDate today =  LocalDate.now();
-        for (Booking booking: bookings) {
-            if (booking.getReturnDate().compareTo(today) > 0){
-                booking.setStatus(BookingStatus.Retard.toString());
-                sendMail(booking.getMembre().getEmail(), booking.getBook().getName());
-            }
-        }
-    }
+//    public void checkDate(List<Booking> bookings) throws MessagingException {
+//        LocalDate today =  LocalDate.now();
+//        for (Booking booking: bookings) {
+//            if (booking.getReturnDate().compareTo(today) > 0){
+//                booking.setStatus(BookingStatus.Retard.toString());
+//                sendMail(booking.getMembre().getEmail(), booking.getBook().getName());
+//            }
+//        }
+//    }
     
     public Booking extend(Booking booking){
         // #2 cannot extend booking if renewable is false
@@ -137,43 +137,43 @@ public class BookingService {
         return update(booking);
     }
 
-    public void sendMail(String recepient, String book) throws MessagingException {
-
-
-
-        Properties properties = new Properties();
-
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(mailDetails.getMyAccountEmail(), mailDetails.getPassword());
-            }
-        });
-        Message message = prepareMessage(session, mailDetails.getMyAccountEmail(), recepient, book);
-
-        Transport.send(message);
-
-    }
-    private Message prepareMessage (Session session, String myAccountEmail, String recepient, String book ) throws MessagingException {
-
-        try{
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(myAccountEmail));
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
-            message.setSubject(mailDetails.getSubject());
-            message.setText(mailDetails.getMessage() + book);
-            return message;
-        } catch (AddressException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    
+//    public void sendMail(String recepient, String book) throws MessagingException {
+//
+//
+//
+//        Properties properties = new Properties();
+//
+//        properties.put("mail.smtp.auth", "true");
+//        properties.put("mail.smtp.starttls.enable", "true");
+//        properties.put("mail.smtp.host", "smtp.gmail.com");
+//        properties.put("mail.smtp.port", "587");
+//
+//        Session session = Session.getInstance(properties, new Authenticator() {
+//            @Override
+//            protected PasswordAuthentication getPasswordAuthentication() {
+//                return new PasswordAuthentication(mailDetails.getMyAccountEmail(), mailDetails.getPassword());
+//            }
+//        });
+//        Message message = prepareMessage(session, mailDetails.getMyAccountEmail(), recepient, book);
+//
+//        Transport.send(message);
+//
+////    }
+//    private Message prepareMessage (Session session, String myAccountEmail, String recepient, String book ) throws MessagingException {
+//
+//        try{
+//            Message message = new MimeMessage(session);
+//            message.setFrom(new InternetAddress(myAccountEmail));
+//            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
+//            message.setSubject(mailDetails.getSubject());
+//            message.setText(mailDetails.getMessage() + book);
+//            return message;
+//        } catch (AddressException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+//
 //    public List<Book> getMemberReservatedBooks(String email){
 //        Member member = memberService.getMember(email);
 //        List<Booking> bookingList = bookingRepository.findAllByMember(member);
@@ -189,7 +189,8 @@ public class BookingService {
     Booking booking = bookingRepository.findBookingById(id);
     Book returnedBook = booking.getBook();
     List<WaitingLine> waitingListsForThisBook = waitingLineService.getWaitingListbyBook(returnedBook);
-    if (waitingListsForThisBook == null && returnedBook.getCopies() > 0){
+        System.out.println(waitingListsForThisBook.size());
+    if (waitingListsForThisBook.size() == 0  && returnedBook.getCopies() > 0){
         booking.setStatus(BookingStatus.Terminee.toString());
         booking.setRenewable(false);
         returnedBook.setCopies(returnedBook.getCopies()+1);
