@@ -1,20 +1,13 @@
 package oc.projet10.Service.Book;
 
-import javassist.NotFoundException;
 import oc.projet10.Entity.Book;
 import oc.projet10.Repository.BookRepository;
 import oc.projet10.Service.BookService;
 import oc.projet10.Service.BookingService;
 import oc.projet10.bean.BookDto;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.util.Assert;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;

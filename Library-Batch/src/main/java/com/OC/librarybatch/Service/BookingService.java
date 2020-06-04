@@ -3,10 +3,14 @@ package com.OC.librarybatch.Service;
 import com.OC.librarybatch.Entity.Booking;
 import com.OC.librarybatch.Entity.BookingRequest;
 import com.OC.librarybatch.Entity.MailDetails;
+import com.OC.librarybatch.Entity.Pickup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +18,7 @@ import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.xml.ws.Response;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,36 +33,48 @@ import java.util.Properties;
 public class BookingService {
 
     RestTemplate restTemplate = new RestTemplate();
+    HttpHeaders httpHeaders = new HttpHeaders();
 
     @Autowired
     private MailDetails mailDetails;
 
-    public List<Booking> findAllByStatus() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        String url = "http://localhost:8080/activeBooking";
+    @Autowired
+    private AuthService authService;
 
-        HttpURLConnection httpClient =
-                (HttpURLConnection) new URL(url).openConnection();
+//    public List<Booking> findAllByStatus() throws IOException {
+//        ObjectMapper mapper = new ObjectMapper();
+//        String url = "http://localhost:8080/activeBooking";
+//
+//        HttpURLConnection httpClient =
+//                (HttpURLConnection) new URL(url).openConnection();
+//
+//        httpClient.setRequestMethod("GET");
+//
+//        try (BufferedReader in = new BufferedReader(
+//                new InputStreamReader(httpClient.getInputStream()))) {
+//            StringBuilder response = new StringBuilder();
+//            String line;
+//            while ((line = in.readLine()) != null) {
+//                response.append(line);
+//            }
+//            List bookingList = Arrays.asList(mapper.readValue(response.toString(), Booking[].class));
+//            return bookingList;
+//        }
+//    }
 
-        httpClient.setRequestMethod("GET");
 
-        try (BufferedReader in = new BufferedReader(
-                new InputStreamReader(httpClient.getInputStream()))) {
+    public List<Booking> findAllActiveBooking() throws JSONException, JsonProcessingException {
+        httpHeaders = authService.getJwtForBatchService();
+        HttpEntity request = new HttpEntity(httpHeaders);
+        System.out.println(request.getHeaders().toString());
+        ResponseEntity<Booking[]> response = restTemplate.exchange(
+                "http://localhost:8080/activeBooking", HttpMethod.GET, request, Booking[].class);
+        List<Booking> activeBookings = Arrays.asList(response.getBody());
 
-            StringBuilder response = new StringBuilder();
-            String line;
-
-            while ((line = in.readLine()) != null) {
-                response.append(line);
-            }
-
-            System.out.println(response.toString());
-            List bookingList = Arrays.asList(mapper.readValue(response.toString(), Booking[].class));
-            return bookingList;
-        }
+        return activeBookings;
     }
 
-    public void checkDateBooking(List<Booking> bookings) throws MessagingException {
+    public void checkDateBooking(List<Booking> bookings) throws Exception {
         LocalDate today =  LocalDate.now();
         for (Booking booking: bookings) {
             if (booking.getReturnDate().compareTo(today) > 0){
@@ -68,10 +85,17 @@ public class BookingService {
             }
         }
     }
-    public HttpStatus expiredBooking(BookingRequest bookingRequest){
-        ResponseEntity<BookingRequest> responseEntity =
-                restTemplate.postForEntity("http://localhost:8080/expiredBooking",bookingRequest, BookingRequest.class);
-        return responseEntity.getStatusCode();
+    public void expiredBooking(BookingRequest bookingRequest) throws JSONException, JsonProcessingException {
+//        ResponseEntity<BookingRequest> responseEntity =
+//                restTemplate.postForEntity("http://localhost:8080/expiredBooking",bookingRequest, BookingRequest.class);
+        JSONObject bookingJsonObject = new JSONObject();
+        bookingJsonObject.put("id",bookingRequest.getId());
+        httpHeaders = authService.getJwtForBatchService();
+        HttpEntity httpEntity = new HttpEntity<>(bookingJsonObject, httpHeaders);
+        System.out.println(httpEntity.getHeaders().toString());
+        ResponseEntity<BookingRequest[]> response = restTemplate.exchange(
+                "http://localhost:8080/expiredBooking",HttpMethod.POST, httpEntity, BookingRequest[].class);
+
     }
 
 

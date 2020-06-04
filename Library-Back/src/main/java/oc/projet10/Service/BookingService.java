@@ -49,9 +49,9 @@ public class BookingService {
         return bookingRepository.findBookingById(id);
     }
 
-    public List<Booking> findAllByStatus(){
-          List<Booking> activeBookings =  bookingRepository.findAllByStatus("Actif");
-          return activeBookings;
+    public List<BookingDto> findAllActiveBookings(){
+        List<BookingDto> activebookingDtoList = bookingListToDto( bookingRepository.findAllByStatus("Actif"));
+          return activebookingDtoList;
     }
 
     public Booking createBooking(Member member, Book book){
@@ -136,54 +136,6 @@ public class BookingService {
         }
         return update(booking);
     }
-
-//    public void sendMail(String recepient, String book) throws MessagingException {
-//
-//
-//
-//        Properties properties = new Properties();
-//
-//        properties.put("mail.smtp.auth", "true");
-//        properties.put("mail.smtp.starttls.enable", "true");
-//        properties.put("mail.smtp.host", "smtp.gmail.com");
-//        properties.put("mail.smtp.port", "587");
-//
-//        Session session = Session.getInstance(properties, new Authenticator() {
-//            @Override
-//            protected PasswordAuthentication getPasswordAuthentication() {
-//                return new PasswordAuthentication(mailDetails.getMyAccountEmail(), mailDetails.getPassword());
-//            }
-//        });
-//        Message message = prepareMessage(session, mailDetails.getMyAccountEmail(), recepient, book);
-//
-//        Transport.send(message);
-//
-////    }
-//    private Message prepareMessage (Session session, String myAccountEmail, String recepient, String book ) throws MessagingException {
-//
-//        try{
-//            Message message = new MimeMessage(session);
-//            message.setFrom(new InternetAddress(myAccountEmail));
-//            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
-//            message.setSubject(mailDetails.getSubject());
-//            message.setText(mailDetails.getMessage() + book);
-//            return message;
-//        } catch (AddressException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-//
-//    public List<Book> getMemberReservatedBooks(String email){
-//        Member member = memberService.getMember(email);
-//        List<Booking> bookingList = bookingRepository.findAllByMember(member);
-//        List<Book> reservatedBook = new ArrayList<>();
-//        for (Booking booking :  bookingList
-//             ) {
-//            reservatedBook.add(booking.getBook());
-//        }
-//        return reservatedBook;
-//    }
 
     public void endBooking(int id) throws Exception {
     Booking booking = bookingRepository.findBookingById(id);

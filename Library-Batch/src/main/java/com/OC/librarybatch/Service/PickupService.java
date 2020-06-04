@@ -1,9 +1,12 @@
 package com.OC.librarybatch.Service;
 
+import com.OC.librarybatch.Entity.Booking;
 import com.OC.librarybatch.Entity.BookingRequest;
 import com.OC.librarybatch.Entity.Pickup;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.codehaus.jettison.json.JSONArray;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,14 +19,22 @@ import java.util.List;
 public class PickupService {
 
     RestTemplate restTemplate = new RestTemplate();
-    public List<Pickup> findAllActivePickup(){
-         ResponseEntity<Pickup[]> responseEntity =
-                 restTemplate.getForEntity("http://localhost:8080/activePickups", Pickup[].class);
-         List<Pickup> activePickups = Arrays.asList(responseEntity.getBody());
-         return activePickups;
+    HttpHeaders httpHeaders =  new HttpHeaders();
+    @Autowired
+    AuthService authService;
+
+    public List<Pickup> findAllActivePickup() throws Exception{
+        httpHeaders = authService.getJwtForBatchService();
+        HttpEntity httpEntity = new HttpEntity(httpHeaders);
+        System.out.println(httpEntity.getHeaders().toString());
+        ResponseEntity<Pickup[]> response = restTemplate.exchange(
+                "http://localhost:8080/activePickups", HttpMethod.GET, httpEntity, Pickup[].class);
+        List<Pickup> activePickup = Arrays.asList(response.getBody());
+        System.out.println(activePickup);
+         return activePickup;
     }
 
-    public void checkDatePickups(List<Pickup> activePickups){
+    public void checkDatePickups(List<Pickup> activePickups) throws Exception{
         List<Pickup> expiredPickups = new ArrayList<>();
         LocalDate today =  LocalDate.now();
         for (Pickup pickup: activePickups) {
@@ -31,7 +42,13 @@ public class PickupService {
                 expiredPickups.add(pickup);
             }
         }
-        restTemplate.postForEntity("http://localhost:8080/expiredPickups",expiredPickups, ResponseEntity.class);
+        JSONArray activePickupJsonArray = new JSONArray(activePickups);
+        httpHeaders = authService.getJwtForBatchService();
+        HttpEntity httpEntity = new HttpEntity(activePickupJsonArray,httpHeaders);
+        System.out.println(httpEntity.getHeaders().toString());
+        ResponseEntity<BookingRequest> response = restTemplate.exchange(
+                "http://localhost:8080/expiredPickups", HttpMethod.POST, httpEntity, BookingRequest.class);
+
     }
 
 }

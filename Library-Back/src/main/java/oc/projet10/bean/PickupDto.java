@@ -15,12 +15,23 @@ public class PickupDto {
 
     private LocalDate expirationDate;
 
+    private String status;
+
 
     public PickupDto(PickupList pickupList) {
         this.id = pickupList.getId();
         this.member = pickupList.getMember();
         this.book = pickupList.getBook();
         this.expirationDate = pickupList.getExpirationDate();
+        this.status = pickupList.getStatus();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getId() {

@@ -23,7 +23,7 @@ public class BatchConfiguration {
         @Scheduled(cron = "0 5 * * * *") // everyday at  5 am
         public void checkReturnDate()  {
             try {
-               List<Booking> bookingList = bookingService.findAllByStatus();
+               List<Booking> bookingList = bookingService.findAllActiveBooking();
                bookingService.checkDateBooking(bookingList);
             } catch (Exception e) {
                 e.printStackTrace();

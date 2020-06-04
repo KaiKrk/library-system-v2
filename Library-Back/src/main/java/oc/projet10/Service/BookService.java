@@ -26,24 +26,6 @@ public class BookService {
         List<BookDto> bookDtoList = bookListToDto( bookRepository.findAll());
         return bookDtoList;
     }
-//
-//    public List<BookDto> findAllExceptReservated(String email){
-//        List<Book> bookList = bookRepository.findAll();
-//        List <Book> reservatedBook = bookingService.getMemberReservatedBooks(email);
-//        for (Book book : reservatedBook
-//             ) {
-//            if (bookList.contains(book)){
-//                System.out.println("-1");
-//                bookList.remove(book);
-//            }
-//        }
-//        System.out.println("email " + email);
-//        System.out.println("Tous les livres " + bookList.size() + "Nombre de livre reserve " + reservatedBook.size());
-//
-//        List<BookDto> bookDtoList = bookListToDto(bookList);
-//        System.out.println("la liste retour " + bookDtoList.size());
-//        return bookDtoList;
-//    }
 
     public List<BookDto> findBooksNotReservated(int memberId){
 
