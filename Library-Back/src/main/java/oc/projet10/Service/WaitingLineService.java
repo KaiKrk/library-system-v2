@@ -72,4 +72,8 @@ public class WaitingLineService {
         }
         return waitingPositionInWaitingLine;
     }
+
+    public void delete(WaitingLine waitingLine){
+        waitingLineRepository.delete(waitingLine);
+    }
 }

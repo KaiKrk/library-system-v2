@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface PickupListRepository extends JpaRepository<PickupList,Integer> {
+    public PickupList findById(int id);
 
     public List<PickupList> findAllByStatus(String status);
 

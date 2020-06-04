@@ -18,11 +18,15 @@ public class PickupListService {
     @Autowired
     PickupListRepository pickupListRepository;
 
-    public void save(PickupList pickupList){
-        pickupListRepository.save(pickupList);
+    public PickupList save(PickupList pickupList){
+        return pickupListRepository.save(pickupList);
     }
 
-    public void waitingLineToPickupLine(WaitingLine waitingLine){
+    public PickupList getPickupList(int id){
+        return pickupListRepository.findById(id);
+    }
+
+    public PickupList waitingLineToPickupLine(WaitingLine waitingLine){
         PickupList pickupList = new PickupList();
         LocalDate today = LocalDate.now();
         LocalDate expirationDate = today.plusDays(2);
@@ -30,7 +34,7 @@ public class PickupListService {
         pickupList.setExpirationDate(expirationDate);
         pickupList.setMember(waitingLine.getMember());
         pickupList.setStatus(WaitingPickingStatus.Actif.toString());
-        save(pickupList);
+        return save(pickupList);
     }
 
 
@@ -45,5 +49,9 @@ public class PickupListService {
             pickupDtoList.add(new PickupDto(pickupList));
         }
         return pickupDtoList;
+    }
+
+    public void delete(PickupList pickup){
+        pickupListRepository.delete(pickup);
     }
 }
