@@ -17,7 +17,7 @@ public class MailDetails {
     private String message = "Bonjour vous avez oublier de rendre votre livre veuillez nous le faire parvenir.\n Livre : ";
 
     private String pickupMessage = "Bonjour un livre sur lequel vous etiez en liste d'attente est desormais disponible" +
-            "veuillez venir le recuperer sous 48 heures sinon le livre ne vous sera plus reservé." +
+            " veuillez venir le recuperer sous 48 heures sinon le livre ne vous sera plus reservé." +
             "\n Libre concerné : ";
 
     public String getPickupMessage() {

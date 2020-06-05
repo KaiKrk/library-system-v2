@@ -14,7 +14,7 @@ import java.util.Properties;
 
 @Service
 public class EmailService {
-    MailDetails mailDetails;
+    MailDetails mailDetails = new MailDetails();
 
     public void sendEmailForPickup(String email, Book book) throws Exception {
 
@@ -34,7 +34,7 @@ public class EmailService {
             }
         });
         Message message = prepareMessage(session, mailDetails.getMyAccountEmail(), email, book);
-
+        System.out.println(message);
         Transport.send(message);
 
     }

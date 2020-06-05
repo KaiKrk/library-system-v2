@@ -141,7 +141,7 @@ public class BookingService {
     Booking booking = bookingRepository.findBookingById(id);
     Book returnedBook = booking.getBook();
     List<WaitingLine> waitingListsForThisBook = waitingLineService.getWaitingListbyBook(returnedBook);
-        System.out.println(waitingListsForThisBook.size());
+        System.out.println("Membre dans la liste d'attente " +waitingListsForThisBook.size());
     if (waitingListsForThisBook.size() == 0  && returnedBook.getCopies() > 0){
         booking.setStatus(BookingStatus.Terminee.toString());
         booking.setRenewable(false);
@@ -152,6 +152,9 @@ public class BookingService {
         WaitingLine waitingLinefirst = waitingLineService.getTheFirstOfWaitingList(returnedBook);
         String email = waitingLinefirst.getMember().getEmail();
         emailService.sendEmailForPickup(email, waitingLinefirst.getBook());
+        booking.setStatus(BookingStatus.Terminee.toString());
+        booking.setRenewable(false);
+        update(booking);
         waitingLineService.updateStatus(waitingLinefirst);
         pickupListService.waitingLineToPickupLine(waitingLinefirst);
     }
