@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,6 +47,7 @@ public class BatchBookingServiceTest {
                 postForObject("http://localhost:8080/authenticate", request, AuthDetails.class);
         System.out.println(request.getHeaders().toString());
         System.out.println(authDetails);
+        Assert.assertTrue(authDetails.getToken() != null);
     }
 
 

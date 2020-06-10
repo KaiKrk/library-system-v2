@@ -11,6 +11,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -78,24 +79,24 @@ public class BookingService {
         LocalDate today =  LocalDate.now();
         for (Booking booking: bookings) {
             if (booking.getReturnDate().compareTo(today) > 0){
-                sendMail(booking.getMemberEmail(), booking.getBookName());
+                System.out.println("send mail " + booking.getMember().getEmail());
                 BookingRequest bookingRequest = new BookingRequest(booking.getId());
                 expiredBooking(bookingRequest);
-
+                sendMail(booking.getMember().getEmail(), booking.getBook().getName());
             }
         }
     }
     public void expiredBooking(BookingRequest bookingRequest) throws JSONException, JsonProcessingException {
 //        ResponseEntity<BookingRequest> responseEntity =
 //                restTemplate.postForEntity("http://localhost:8080/expiredBooking",bookingRequest, BookingRequest.class);
-        JSONObject bookingJsonObject = new JSONObject();
-        bookingJsonObject.put("id",bookingRequest.getId());
+//        JSONObject bookingJsonObject = new JSONObject();
+//        bookingJsonObject.put("id",bookingRequest.getId());
         httpHeaders = authService.getJwtForBatchService();
-        HttpEntity httpEntity = new HttpEntity<>(bookingJsonObject, httpHeaders);
-        System.out.println(httpEntity.getHeaders().toString());
-        ResponseEntity<BookingRequest[]> response = restTemplate.exchange(
-                "http://localhost:8080/expiredBooking",HttpMethod.POST, httpEntity, BookingRequest[].class);
-
+        HttpEntity httpEntity = new HttpEntity<>(bookingRequest, httpHeaders);
+        System.out.println(bookingRequest.getId());
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+         restTemplate.postForEntity(
+                "http://localhost:8080/expiredBooking", httpEntity, BookingRequest.class);
     }
 
 

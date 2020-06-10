@@ -18,6 +18,8 @@ public class PickupListService {
     @Autowired
     PickupListRepository pickupListRepository;
 
+    public PickupList findPickupListById(int id){return pickupListRepository.findById(id);}
+
     public PickupList save(PickupList pickupList){
         return pickupListRepository.save(pickupList);
     }

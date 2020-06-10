@@ -66,4 +66,19 @@ public class PickupList {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public PickupList() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "PickupList{" +
+                "id=" + id +
+                ", member=" + member +
+                ", book=" + book +
+                ", expirationDate=" + expirationDate +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

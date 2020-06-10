@@ -89,7 +89,7 @@ public class BookingController {
     }
 
     @PostMapping("/expiredBooking")
-    public void expiredBooking(@RequestBody BookingRequest bookingRequest) throws Exception {
-        bookingService.changeStatus(bookingService.findBookingById(bookingRequest.getId()), BookingStatus.Retard.toString());
+    public ResponseEntity<BookingDto> expiredBooking(@RequestBody BookingRequest bookingRequest) throws Exception {
+        return new ResponseEntity<>(new BookingDto(bookingService.changeStatus(bookingService.findBookingById(bookingRequest.getId()), BookingStatus.Retard.toString())),HttpStatus.OK);
     }
 }

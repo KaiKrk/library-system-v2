@@ -59,4 +59,15 @@ public class Pickup {
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
+
+    @Override
+    public String toString() {
+        return "Pickup{" +
+                "id=" + id +
+                ", memberName='" + memberName + '\'' +
+                ", bookName='" + bookName + '\'' +
+                ", status='" + status + '\'' +
+                ", expirationDate=" + expirationDate +
+                '}';
+    }
 }

@@ -5,12 +5,12 @@ import oc.projet10.Entity.WaitingPickingStatus;
 import oc.projet10.Repository.PickupListRepository;
 import oc.projet10.Service.PickupListService;
 import oc.projet10.bean.PickupDto;
+import oc.projet10.bean.PickupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,12 +24,13 @@ public class PickupController {
     PickupListService pickupListService;
 
     @PostMapping("/expiredPickups")
-    public void changeStatusExpiredPickups(List<PickupList> expiredPickup){
-        for (PickupList pickupList: expiredPickup) {
-            pickupList.setStatus(WaitingPickingStatus.Expiree.toString());
-            pickupListRepository.save(pickupList);
-        }
-
+    public ResponseEntity<PickupDto> changeStatusExpiredPickups(@RequestBody PickupRequest expiredPickup){
+        System.out.println(expiredPickup.getId());
+            PickupList expPickups  = pickupListService.findPickupListById(expiredPickup.getId());
+            expPickups.setStatus(WaitingPickingStatus.Expiree.toString());
+        System.out.println(expiredPickup);
+            pickupListService.save(expPickups);
+        return new ResponseEntity(expiredPickup,HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/activePickups")

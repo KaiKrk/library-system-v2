@@ -31,7 +31,6 @@ public class BatchConfiguration {
 
         }
 
-
     @Scheduled(cron = "0 5 * * * *") // everyday at  5 am
     public void checkReturnDatePickup()  {
         try {

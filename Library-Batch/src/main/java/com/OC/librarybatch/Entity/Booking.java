@@ -13,9 +13,10 @@ public class Booking {
 
     private int id;
 
-    private String memberEmail;
+    private Member member;
 
-    private String bookName;
+    private Book book;
+
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate borrowingDate;
@@ -27,19 +28,6 @@ public class Booking {
 
     private String status;
 
-    public Booking() {
-    }
-
-    public Booking(int id, String memberEmail, String bookName, LocalDate borrowingDate, LocalDate returnDate, Boolean renewable, String status) {
-        this.id = id;
-        this.memberEmail = memberEmail;
-        this.bookName = bookName;
-        this.borrowingDate = borrowingDate;
-        this.returnDate = returnDate;
-        this.renewable = renewable;
-        this.status = status;
-    }
-
     public int getId() {
         return id;
     }
@@ -48,20 +36,20 @@ public class Booking {
         this.id = id;
     }
 
-    public String getMemberEmail() {
-        return memberEmail;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberEmail(String memberEmail) {
-        this.memberEmail = memberEmail;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
-    public String getBookName() {
-        return bookName;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public LocalDate getBorrowingDate() {
@@ -96,16 +84,16 @@ public class Booking {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "id=" + id +
-                ", memberEmail='" + memberEmail + '\'' +
-                ", bookName='" + bookName + '\'' +
-                ", borrowingDate=" + borrowingDate +
-                ", returnDate=" + returnDate +
-                ", renewable=" + renewable +
-                ", status='" + status + '\'' +
-                '}';
+    public Booking() {
+    }
+
+    public Booking(int id, Member member, Book book, String bookName, LocalDate borrowingDate, LocalDate returnDate, Boolean renewable, String status) {
+        this.id = id;
+        this.member = member;
+        this.book = book;
+        this.borrowingDate = borrowingDate;
+        this.returnDate = returnDate;
+        this.renewable = renewable;
+        this.status = status;
     }
 }
