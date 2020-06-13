@@ -1,6 +1,7 @@
 package com.OC.librarybatch;
 
 import com.OC.librarybatch.Entity.AuthDetails;
+import com.OC.librarybatch.Entity.Booking;
 import com.OC.librarybatch.Service.BookingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @SpringBootTest
 public class BatchBookingServiceTest {
@@ -27,7 +29,12 @@ public class BatchBookingServiceTest {
     @Test
     public void testFindAllActiveBooking() throws IOException, JSONException {
         System.out.println(bookingService.findAllActiveBooking());
+        List<Booking> activeBookings =  bookingService.findAllActiveBooking();
+        if (activeBookings.size() > 1){
+            Assert.assertNotEquals(activeBookings.get(0),"Terminee");
+        }
     }
+
 
 
     RestTemplate restTemplate = new RestTemplate();

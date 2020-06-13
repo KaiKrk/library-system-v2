@@ -50,7 +50,7 @@ public class BookingService {
     }
 
     public List<BookingDto> findAllActiveBookings(){
-        List<BookingDto> activebookingDtoList = bookingListToDto( bookingRepository.findAllByStatus("Actif"));
+        List<BookingDto> activebookingDtoList = bookingListToDto( bookingRepository.findAllByStatus("Actif","Prolongee"));
           return activebookingDtoList;
     }
 

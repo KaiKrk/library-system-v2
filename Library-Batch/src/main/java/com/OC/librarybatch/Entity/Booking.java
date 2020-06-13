@@ -96,4 +96,17 @@ public class Booking {
         this.renewable = renewable;
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", member=" + member +
+                ", book=" + book +
+                ", borrowingDate=" + borrowingDate +
+                ", returnDate=" + returnDate +
+                ", renewable=" + renewable +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
