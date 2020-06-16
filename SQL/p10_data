@@ -1,0 +1,159 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.1
+-- Dumped by pg_dump version 12.2
+
+-- Started on 2020-06-16 11:21:37
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2853 (class 0 OID 34415)
+-- Dependencies: 197
+-- Data for Name: book; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.book (book_id, author, category, copies_book, name, max_copies) FROM stdin;
+1	James Smith	Fantasy	19	Tales Of James	20
+2	John Doe	Drame	99	Drame de John	100
+3	Paul Doe	Fantasy	45	Fairy Tales of Paul	45
+6	Jean Doe	Fantasy	45	Les Manuscrits De Xecdarr	45
+8	Sam Doe	Fantasy	0	Fairy Tales of Sam	10
+9	Jean Bern	Compte	19	La Chronique Des Natthys	20
+10	Beckett Rosario	Thriller	12	La Chronique De La Conception	15
+11	Beckett Rosario	Thriller	5	Le Testament D'yflena	5
+12	Eric Larson	Drame	3	Les Histoires D'Enseignements	3
+13	Eric Larson	Drame	6	La Parole De Sendon	6
+14	Charlotte Mcguire	Enfance	3	Le Livre D'urasil	3
+15	Valentina Hamilton	Enfance	3	Le Livre De Générations	3
+16	John Pittman	Enfance	4	La Parole Du Protecteur	7
+4	Paul Doe	Fantasy	0	Les Paroles De L'Élément	5
+36	Arthur	Roman Policier 	1	Le Seul et Unique Livre	1
+\.
+
+
+--
+-- TOC entry 2855 (class 0 OID 34426)
+-- Dependencies: 199
+-- Data for Name: member; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.member (member_id, name, email, password, surname, admin) FROM stdin;
+1	John	JS@email.fr	$2a$10$YC1Tr/FTdq3844luPcnR1OFtwDodJW4ZIfDM/UYtaNUJeOTh51zUC	Smith	f
+2	John	JohnD@email.fr	$2a$10$fSJ.hwlIKdXzYwC0lIvyeevhkzShQTRwvw8fq/OFbHSmqGSDsUYxa	Doe	f
+3	Anna	annalibraryoc@gmail.com	$2a$10$Djo8zB6BspdmYRaTOYweC.ruygHhme6qyxfTU/3Ta12Vj4pJxCvLW	Harrison	t
+4	Jack	jackp7opc@yopmail.com	$2a$10$u8o6J6zXUiWglIzQ86ti.O6ZNDOq21r8dhesbrZXm8O24UfcXnliS	Scott	f
+5	Carl	carllevisp7@yopmail.com	$2a$10$TQyI0N9xilyh9IULE1YGdewg596d3cO2nfQVd2z84OYA4ozGyP81a	Levis	f
+7	testeur	test@email.fr	123	test	f
+\.
+
+
+--
+-- TOC entry 2857 (class 0 OID 34437)
+-- Dependencies: 201
+-- Data for Name: booking; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.booking (booking_id, member_id, book_id, borrowing_date, return_date, renewable, status) FROM stdin;
+8	1	9	2020-03-31	2020-05-01	f	Prolongee
+10	4	12	2020-02-06	2020-03-06	t	Actif
+11	4	13	2020-03-18	2020-05-20	f	Prolongee
+9	4	15	2020-04-06	2020-05-06	f	Actif
+14	1	4	2020-05-21	2020-07-05	f	Retard
+15	1	8	2020-05-15	2020-06-15	f	Retard
+4	1	3	2020-03-28	2020-04-28	f	Retard
+12	4	1	2020-04-20	2020-05-20	t	Actif
+13	1	2	2020-05-17	2020-06-29	f	Prolongee
+\.
+
+
+--
+-- TOC entry 2861 (class 0 OID 34478)
+-- Dependencies: 205
+-- Data for Name: pickup_list; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pickup_list (pickup_id, book_id, member_id, expiration_date, status) FROM stdin;
+5	4	1	2020-06-07	Actif
+2	8	2	2020-06-12	Expiree
+1	4	2	2020-06-12	Expiree
+\.
+
+
+--
+-- TOC entry 2859 (class 0 OID 34461)
+-- Dependencies: 203
+-- Data for Name: waiting_list; Type: TABLE DATA; Schema: public; Owner: Kai
+--
+
+COPY public.waiting_list (id, book_id, member_id, waiting_position, register_date, status) FROM stdin;
+2	4	2	2	2020-01-08 04:05:08	Actif
+3	8	2	1	2020-06-08 04:05:08	Actif
+4	8	4	2	2020-06-07 04:05:08	Actif
+5	8	1	3	2020-06-10 04:05:08	Actif
+1	4	4	1	2020-01-08 04:05:06	Actif
+\.
+
+
+--
+-- TOC entry 2867 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: book_book_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.book_book_id_seq', 42, true);
+
+
+--
+-- TOC entry 2868 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: booking_booking_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.booking_booking_id_seq', 47, true);
+
+
+--
+-- TOC entry 2869 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: member_member_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.member_member_id_seq', 7, true);
+
+
+--
+-- TOC entry 2870 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: pickup_list_pickup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.pickup_list_pickup_id_seq', 16, true);
+
+
+--
+-- TOC entry 2871 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: waiting_list_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Kai
+--
+
+SELECT pg_catalog.setval('public.waiting_list_id_seq', 32, true);
+
+
+-- Completed on 2020-06-16 11:21:37
+
+--
+-- PostgreSQL database dump complete
+--
+
