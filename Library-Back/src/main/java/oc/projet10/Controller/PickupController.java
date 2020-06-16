@@ -25,10 +25,8 @@ public class PickupController {
 
     @PostMapping("/expiredPickups")
     public ResponseEntity<PickupDto> changeStatusExpiredPickups(@RequestBody PickupRequest expiredPickup){
-        System.out.println(expiredPickup.getId());
             PickupList expPickups  = pickupListService.findPickupListById(expiredPickup.getId());
             expPickups.setStatus(WaitingPickingStatus.Expiree.toString());
-        System.out.println(expiredPickup);
             pickupListService.save(expPickups);
         return new ResponseEntity(expiredPickup,HttpStatus.ACCEPTED);
     }

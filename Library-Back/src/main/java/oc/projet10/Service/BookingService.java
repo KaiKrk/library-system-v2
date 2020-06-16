@@ -98,13 +98,6 @@ public class BookingService {
 
     public Booking changeStatus(Booking booking,String status){
 
-//        if (status.equalsIgnoreCase(BookingStatus.Actif.toString())){
-//            booking.setStatus(status);
-//        } else if (status.equalsIgnoreCase(BookingStatus.Prolongee.toString())){
-//            booking.setStatus(status);
-//        } else if (status.equalsIgnoreCase(BookingStatus.Terminee.toString())){
-//            booking.setStatus(status);
-//        }
         if (status.equalsIgnoreCase(BookingStatus.Retard.toString())){
             booking.setStatus(status);
             booking.setRenewable(false);
@@ -115,17 +108,7 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
-    
-//    public void checkDate(List<Booking> bookings) throws MessagingException {
-//        LocalDate today =  LocalDate.now();
-//        for (Booking booking: bookings) {
-//            if (booking.getReturnDate().compareTo(today) > 0){
-//                booking.setStatus(BookingStatus.Retard.toString());
-//                sendMail(booking.getMembre().getEmail(), booking.getBook().getName());
-//            }
-//        }
-//    }
-    
+
     public Booking extend(Booking booking){
         // #2 cannot extend booking if renewable is false
         if(booking.getRenewable() == true){

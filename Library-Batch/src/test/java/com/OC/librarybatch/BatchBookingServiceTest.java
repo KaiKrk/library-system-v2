@@ -28,7 +28,6 @@ public class BatchBookingServiceTest {
 
     @Test
     public void testFindAllActiveBooking() throws IOException, JSONException {
-        System.out.println(bookingService.findAllActiveBooking());
         List<Booking> activeBookings =  bookingService.findAllActiveBooking();
         if (activeBookings.size() > 1){
             Assert.assertNotEquals(activeBookings.get(0),"Terminee");
