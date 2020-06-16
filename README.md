@@ -1,7 +1,7 @@
 ## Library App Update
 
-Pour generer l'executable de l'application effectuez un mvn package 
-modifiez le fichier application.properties
+Pour generer l'executable de l'application effectuez un mvn package. 
+Modifiez le fichier application.properties
 
 ```
 spring.datasource.driverClassName=org.postgresql.Driver
@@ -13,7 +13,7 @@ logging.file.name = logs
 account=annalibraryoc@gmail.com
 password=12345LibraryOC
 ```
-l'application utilise le serveur stmp gmail, vous pouvez modifier le compte d'accès 
+L'application utilise le serveur stmp gmail, vous pouvez modifier le compte d'accès. 
 
-l'application utlise PostGreSQL comme serveur de base de données, les scripts sont présent dans le fichier nommée "SQL"
+L'application utlise PostGreSQL comme serveur de base de données, les scripts sont présent dans le fichier nommée "SQL".
 
