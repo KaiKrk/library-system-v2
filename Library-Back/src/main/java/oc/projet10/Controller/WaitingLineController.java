@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -35,8 +36,14 @@ public class WaitingLineController {
     Logger logger = LoggerFactory.getLogger(BookingController.class);
 
     @PostMapping("/saveInWaitingLine")
-    public ResponseEntity<WaitingLineDto> save(@RequestBody WaitingLine waitingLine) {
-        WaitingLineDto waitingLineDto = new WaitingLineDto(waitingLineService.save(waitingLine));
+    public ResponseEntity<WaitingLineDto> save(@RequestBody WaitingLineRequest waitingLine) {
+        System.out.println(waitingLine);
+        WaitingLine newWaitingLine = new WaitingLine();
+        newWaitingLine.setBook(bookService.findBookById(waitingLine.getBookId()));
+        newWaitingLine.setStatus("Actif");
+        newWaitingLine.setRegisteredDate(LocalDateTime.now());
+        newWaitingLine.setMember(memberService.getMemberById(waitingLine.getMemberId()));
+        WaitingLineDto waitingLineDto = new WaitingLineDto(waitingLineService.save(newWaitingLine));
         return new ResponseEntity<>(waitingLineDto, HttpStatus.CREATED);
 
     }

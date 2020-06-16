@@ -29,7 +29,6 @@ public class BookServiceTest {
         List<BookDto> notReservatedBookList = bookService.findBooksNotReservated(memberId);
         List<BookDto> reservatedBookList = bookService.findReservatedBooks(memberId);
         List<BookDto> allBooksInLibrary = bookService.findAll();
-        System.out.println("notReservatedBookList" + notReservatedBookList.size() + "reservatedBookList"+reservatedBookList.size()+"allBooksInLibrary"+allBooksInLibrary.size());
         assertEquals(allBooksInLibrary.size(),notReservatedBookList.size()+reservatedBookList.size());
 
     }

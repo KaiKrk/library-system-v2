@@ -8,7 +8,7 @@ public class MailDetails {
 
     private  String myAccountEmail = "annalibraryoc@gmail.com";
 
-    private  String password = "LibraryOCP7+";
+    private  String password = "LibraryOCP7openclassrooms";
 
     private String subject = "Retour de livre emprunté";
 

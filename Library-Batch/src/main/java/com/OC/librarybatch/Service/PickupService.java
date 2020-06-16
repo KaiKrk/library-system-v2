@@ -46,7 +46,7 @@ public class PickupService {
     public void checkDatePickups(List<Pickup> activePickups) throws Exception{
         LocalDate today =  LocalDate.now();
         for (Pickup pickup: activePickups) {
-            if (pickup.getExpirationDate().compareTo(today) > 0){
+            if (today.compareTo(pickup.getExpirationDate()) > 0){
                 PickupRequest pickupRequest = new PickupRequest(pickup.getId());
                 sendExpiredPickups(pickupRequest);
             }

@@ -9,7 +9,6 @@ import oc.projet10.bean.PickupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class PickupController {
             PickupList expPickups  = pickupListService.findPickupListById(expiredPickup.getId());
             expPickups.setStatus(WaitingPickingStatus.Expiree.toString());
             pickupListService.save(expPickups);
-        return new ResponseEntity(expiredPickup,HttpStatus.ACCEPTED);
+        return new ResponseEntity(expiredPickup,HttpStatus.OK);
     }
 
     @GetMapping("/activePickups")

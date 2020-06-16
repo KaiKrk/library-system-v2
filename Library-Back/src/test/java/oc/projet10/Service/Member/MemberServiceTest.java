@@ -33,7 +33,7 @@ public class MemberServiceTest {
     Member savedMemberInDb = memberService.getMemberById(savedMember.getId());
     assertEquals(savedMember.getEmail(),savedMemberInDb.getEmail());
     assertEquals(savedMember.getName(),savedMemberInDb.getName());
-
+    memberService.delete(savedMemberInDb);
     }
 
     @Test

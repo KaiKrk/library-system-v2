@@ -67,4 +67,20 @@ public class WaitingLine {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "WaitingLine{" +
+                "id=" + id +
+                ", book=" + book +
+                ", member=" + member +
+                ", registeredDate=" + registeredDate +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
+    public WaitingLine() {
+
+    }
+
 }

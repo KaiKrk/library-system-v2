@@ -14,4 +14,9 @@ public class BookingRequest {
     public BookingRequest(int id) {
         this.id = id;
     }
+
+    public BookingRequest() {
+    }
+
+
 }

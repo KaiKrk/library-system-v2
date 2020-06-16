@@ -75,7 +75,6 @@ public class BookingController {
 
     @PostMapping("/extendBooking")
     public ResponseEntity<BookingDto> extendDate(@RequestBody BookingRequest bookingRequest){
-        System.out.println(" id " + bookingRequest.getId());
         Booking booking = bookingService.findBookingById(bookingRequest.getId());
         BookingDto bookingDto = new BookingDto(bookingService.extend(booking));
         logger.info("booking number " + booking.getId() + "is extended " );

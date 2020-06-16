@@ -67,7 +67,6 @@ public class BookingService {
     public List<Booking> findAllActiveBooking() throws JSONException, JsonProcessingException {
         httpHeaders = authService.getJwtForBatchService();
         HttpEntity request = new HttpEntity(httpHeaders);
-        System.out.println(request.getHeaders().toString());
         ResponseEntity<Booking[]> response = restTemplate.exchange(
                 "http://localhost:8080/activeBooking", HttpMethod.GET, request, Booking[].class);
         List<Booking> activeBookings = Arrays.asList(response.getBody());
@@ -78,11 +77,11 @@ public class BookingService {
     public void checkDateBooking(List<Booking> bookings) throws Exception {
         LocalDate today =  LocalDate.now();
         for (Booking booking: bookings) {
-            if (booking.getReturnDate().compareTo(today) > 0){
+            if (today.compareTo(booking.getReturnDate()) > 0){
                 System.out.println("send mail " + booking.getMember().getEmail());
                 BookingRequest bookingRequest = new BookingRequest(booking.getId());
                 expiredBooking(bookingRequest);
-                sendMail(booking.getMember().getEmail(), booking.getBook().getName());
+               sendMail(booking.getMember().getEmail(), booking.getBook().getName());
             }
         }
     }
@@ -93,7 +92,7 @@ public class BookingService {
 //        bookingJsonObject.put("id",bookingRequest.getId());
         httpHeaders = authService.getJwtForBatchService();
         HttpEntity httpEntity = new HttpEntity<>(bookingRequest, httpHeaders);
-        System.out.println(bookingRequest.getId());
+        System.out.println(bookingRequest.getId() +"sending to the back");
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
          restTemplate.postForEntity(
                 "http://localhost:8080/expiredBooking", httpEntity, BookingRequest.class);
