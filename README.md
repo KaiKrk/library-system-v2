@@ -17,3 +17,6 @@ L'application utilise le serveur stmp gmail, vous pouvez modifier le compte d'ac
 
 L'application utlise PostGreSQL comme serveur de base de données, les scripts sont présent dans le fichier nommée "SQL".
 
+## Test
+
+pour tester l'application, allez dans la racine de la couche back ou batch et effectuez un mvn test
