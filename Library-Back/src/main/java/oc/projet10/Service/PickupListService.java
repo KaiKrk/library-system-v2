@@ -18,6 +18,15 @@ public class PickupListService {
     @Autowired
     PickupListRepository pickupListRepository;
 
+    @Autowired
+    WaitingLineService waitingLineService;
+
+    @Autowired
+    EmailService emailService;
+
+    @Autowired
+    BookService bookService;
+
     public PickupList findPickupListById(int id){return pickupListRepository.findById(id);}
 
     public PickupList save(PickupList pickupList){
@@ -55,5 +64,23 @@ public class PickupListService {
 
     public void delete(PickupList pickup){
         pickupListRepository.delete(pickup);
+    }
+
+    public void endPickup(PickupList pickupList) throws Exception {
+        Book returnedBook = pickupList.getBook();
+        List<WaitingLine> waitingListsForThisBook = waitingLineService.getWaitingListbyBook(returnedBook);
+        System.out.println("Membre dans la liste d'attente " +waitingListsForThisBook.size());
+        if (waitingListsForThisBook.size() != 0){
+            WaitingLine waitingLinefirst = waitingLineService.getTheFirstOfWaitingList(returnedBook);
+            String email = waitingLinefirst.getMember().getEmail();
+            emailService.sendEmailForPickup(email, waitingLinefirst.getBook());
+            pickupList.setStatus(WaitingPickingStatus.Expiree.toString());
+            save(pickupList);
+            Book book = pickupList.getBook();
+            int actualCopies = pickupList.getBook().getCopies();
+            book.setCopies(actualCopies+1);
+            bookService.save(book);
+            waitingLineService.updateStatus(waitingLinefirst);
+        }
     }
 }

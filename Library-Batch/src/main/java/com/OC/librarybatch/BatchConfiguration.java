@@ -20,8 +20,7 @@ public class BatchConfiguration {
 
         @Autowired
         PickupService pickupService;
-       // @Scheduled(cron = "0 10 * * * *") // everyday at  10 am
-        @Scheduled(cron = "5 * * * * *") // everyday at  10 am
+       @Scheduled(cron = "0 10 * * * *") // everyday at  10 am
         public void checkReturnDate()  {
             System.out.println("ping");
             try {
@@ -33,7 +32,7 @@ public class BatchConfiguration {
 
         }
 
-    @Scheduled(cron = "5 * * * * *") // everyday at  10 am
+    @Scheduled(cron = "0 10 * * * *") // everyday at  10 am
     public void checkReturnDatePickup()  {
         try {
             List<Pickup> pickupList = pickupService.findAllActivePickup();

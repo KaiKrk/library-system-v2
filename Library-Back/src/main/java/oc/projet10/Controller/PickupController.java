@@ -1,8 +1,10 @@
 package oc.projet10.Controller;
 
+import oc.projet10.Entity.Book;
 import oc.projet10.Entity.PickupList;
 import oc.projet10.Entity.WaitingPickingStatus;
 import oc.projet10.Repository.PickupListRepository;
+import oc.projet10.Service.BookService;
 import oc.projet10.Service.PickupListService;
 import oc.projet10.bean.PickupDto;
 import oc.projet10.bean.PickupRequest;
@@ -22,11 +24,13 @@ public class PickupController {
     @Autowired
     PickupListService pickupListService;
 
+    @Autowired
+    BookService bookService;
+
     @PostMapping("/expiredPickups")
-    public ResponseEntity<PickupDto> changeStatusExpiredPickups(@RequestBody PickupRequest expiredPickup){
+    public ResponseEntity<PickupDto> changeStatusExpiredPickups(@RequestBody PickupRequest expiredPickup) throws Exception {
             PickupList expPickups  = pickupListService.findPickupListById(expiredPickup.getId());
-            expPickups.setStatus(WaitingPickingStatus.Expiree.toString());
-            pickupListService.save(expPickups);
+            pickupListService.endPickup(expPickups);
         return new ResponseEntity(expiredPickup,HttpStatus.OK);
     }
 
